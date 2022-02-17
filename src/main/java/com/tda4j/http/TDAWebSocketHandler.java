@@ -1,5 +1,6 @@
 package com.tda4j.http;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 @Builder
@@ -30,6 +32,7 @@ public class TDAWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
+        System.out.println(message.getPayload());
         Thread newThread = new Thread(() -> {
             try {
                 consumer.accept(mapper.readValue((String) message.getPayload(), StreamResponse.class));
@@ -85,7 +88,7 @@ public class TDAWebSocketHandler implements WebSocketHandler {
 
     private StreamParameters getStreamParameters() {
         return StreamParameters.builder()
-                .keys(sessionConfig.getTickers().toString())
+                .keys(sessionConfig.getTickers().toString().replace("[", "").replace("]", ""))
                 .fields("0,3,8,9")
                 .build();
     }
@@ -146,6 +149,7 @@ public class TDAWebSocketHandler implements WebSocketHandler {
     @Builder
     @Getter
     @Setter
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private static class StreamParameters {
         private final String token;
         private final String credential;
