@@ -1,24 +1,28 @@
 package com.tda4j.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.lang.NonNull;
-
 import java.util.List;
 
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
-@Getter
-@Setter
 public class ServiceMessage {
 
-    @NonNull
-    private String service;
-    @NonNull
-    private List<Content> content;
-    private long timestamp;
+  private String service;
+  private List<Content> content;
+  private long timestamp;
 
+  public String getService() {
+    return this.service;
+  }
+
+  public List<Content> getContent() {
+    return this.content;
+  }
+
+  public long getTimestamp() {
+    return this.timestamp;
+  }
+
+  public String toString() {
+    return "ServiceMessage(service=" + this.getService() + ", content=" + this.getContent()
+        + ", timestamp=" + this.getTimestamp() + ")";
+  }
 }
