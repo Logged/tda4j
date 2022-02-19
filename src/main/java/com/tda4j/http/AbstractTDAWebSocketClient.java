@@ -11,20 +11,20 @@ public abstract class AbstractTDAWebSocketClient extends WebSocketClient {
   protected final Consumer<String> consumer;
   protected final TDACredentials credentials;
   protected final TDASessionConfig sessionConfig;
-  protected final boolean asyncLogin;
 
   public AbstractTDAWebSocketClient(URI uri,
       Consumer<String> consumer, TDACredentials credentials,
-      TDASessionConfig sessionConfig, boolean asyncLogin) {
+      TDASessionConfig sessionConfig) {
     super(uri);
     this.consumer = consumer;
     this.credentials = credentials;
     this.sessionConfig = sessionConfig;
-    this.asyncLogin = asyncLogin;
   }
 
   public abstract void sendQuoteRequest();
 
   public abstract void login();
+
+  public abstract void loginBlocking() throws InterruptedException;
 
 }
