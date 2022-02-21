@@ -33,7 +33,6 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
 
   @Override
   public void onMessage(String message) {
-    System.out.println(message);
     log.trace("Received message: {}", message);
     if (!isLoggedIn.getAcquire()) {
       if (WebSocketUtil.isLoggedIn(message)) {
@@ -57,7 +56,6 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
 
   @Override
   public void sendQuoteRequest() {
-    System.out.println("sending request");
     if (!isLoggedIn.getAcquire()) {
       log.error("Unable to send Quote Request. Not Logged In");
       throw new TDAWebSocketClientException("Unable to send Quote Request. Not Logged In");
