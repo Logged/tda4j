@@ -16,7 +16,7 @@ public class TDACredentialProvider {
       .enableComplexMapKeySerialization()
       .create();
 
-  public static TDACredentials withToken(String bearerToken, String source) {
+  public static TDACredentials withToken(String bearerToken) {
     HttpResponse<String> stringHttpResponse = TDAHttpClient.invokeGet(bearerToken);
     UserPrincipals userPrincipals = gson
         .fromJson(stringHttpResponse.body(), UserPrincipals.class);
@@ -32,7 +32,7 @@ public class TDACredentialProvider {
         .token(userPrincipals.getStreamerInfo().getToken())
         .usergroup(userPrincipals.getStreamerInfo().getUserGroup())
         .userid(userPrincipals.getPrimaryAccountId())
-        .source(source)
+        .source(userPrincipals.getStreamerInfo().getAppId())
         .load();
   }
 }

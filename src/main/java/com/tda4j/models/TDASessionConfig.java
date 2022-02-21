@@ -30,7 +30,7 @@ public class TDASessionConfig {
       return this;
     }
 
-    public TDASessionConfig loader() {
+    public TDASessionConfig load() {
       return new TDASessionConfig(tickers);
     }
   }
