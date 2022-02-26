@@ -1,9 +1,9 @@
-package com.tda4j.models;
+package com.tda4j.models.msg;
 
 import java.util.List;
 
 
-public class ServiceMessage {
+public class ServiceMessage extends Message {
 
   private String service;
   private List<Content> content;
@@ -22,7 +22,7 @@ public class ServiceMessage {
   }
 
   public String toString() {
-    return "ServiceMessage(service=" + this.getService() + ", content=" + this.getContent()
+    return "ServiceMessage(quoteService=" + this.getService() + ", content=" + this.getContent()
         + ", timestamp=" + this.getTimestamp() + ")";
   }
 }

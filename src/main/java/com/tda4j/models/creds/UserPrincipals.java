@@ -1,4 +1,4 @@
-package com.tda4j.models;
+package com.tda4j.models.creds;
 
 import java.time.ZonedDateTime;
 import java.util.List;

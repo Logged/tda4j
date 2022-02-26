@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tda4j.http.TDAHttpClient;
 import com.tda4j.http.typeAdapters.ZdtTypeAdapter;
-import com.tda4j.models.TDACredentials;
-import com.tda4j.models.UserPrincipals;
+import com.tda4j.models.creds.TDACredentials;
+import com.tda4j.models.creds.UserPrincipals;
 import java.net.http.HttpResponse;
 import java.time.ZonedDateTime;
 
@@ -20,19 +20,15 @@ public class TDACredentialProvider {
     HttpResponse<String> stringHttpResponse = TDAHttpClient.invokeGet(bearerToken);
     UserPrincipals userPrincipals = gson
         .fromJson(stringHttpResponse.body(), UserPrincipals.class);
-    return TDACredentials.loader()
-        .accesslevel(userPrincipals.getStreamerInfo().getAccessLevel())
-        .acl(userPrincipals.getStreamerInfo().getAcl())
-        .appid(userPrincipals.getStreamerInfo().getAppId())
-        .cddomain(userPrincipals.getAccounts().get(0).getAccountCdDomainId())
-        .company(userPrincipals.getAccounts().get(0).getCompany())
-        .segment(userPrincipals.getAccounts().get(0).getSegment())
-        .timestamp(Long.toString(
-            userPrincipals.getStreamerInfo().getTokenTimestamp().toInstant().toEpochMilli()))
-        .token(userPrincipals.getStreamerInfo().getToken())
-        .usergroup(userPrincipals.getStreamerInfo().getUserGroup())
-        .userid(userPrincipals.getPrimaryAccountId())
-        .source(userPrincipals.getStreamerInfo().getAppId())
-        .load();
+    return new TDACredentials(userPrincipals.getPrimaryAccountId(),
+        userPrincipals.getStreamerInfo().getToken(),
+        userPrincipals.getAccounts().get(0).getCompany(),
+        userPrincipals.getAccounts().get(0).getSegment(),
+        userPrincipals.getAccounts().get(0).getAccountCdDomainId(),
+        userPrincipals.getStreamerInfo().getUserGroup(),
+        userPrincipals.getStreamerInfo().getAccessLevel(), Long.toString(
+        userPrincipals.getStreamerInfo().getTokenTimestamp().toInstant().toEpochMilli()),
+        userPrincipals.getStreamerInfo().getAppId(),
+        userPrincipals.getStreamerInfo().getAcl(), userPrincipals.getStreamerInfo().getAppId());
   }
 }

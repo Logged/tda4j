@@ -2,8 +2,8 @@ package com.tda4j.http;
 
 import com.tda4j.exceptions.TDAWebSocketClientException;
 import com.tda4j.generators.WebSocketRequestGenerator;
-import com.tda4j.models.TDACredentials;
-import com.tda4j.models.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
+import com.tda4j.models.config.TDASessionConfig;
 import com.tda4j.util.WebSocketUtil;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
@@ -20,9 +20,8 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
   private final AtomicBoolean isLoggedIn = new AtomicBoolean(false);
   private CountDownLatch loginLatch = new CountDownLatch(1);
 
-  public TDAWebSocketClient(URI uri, Consumer<String> consumer, TDACredentials credentials,
-      TDASessionConfig sessionConfig) {
-    super(uri, consumer, credentials, sessionConfig);
+  public TDAWebSocketClient(URI uri, Consumer<String> consumer, TDACredentials credentials) {
+    super(uri, consumer, credentials);
   }
 
   @Override
@@ -55,12 +54,12 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
   }
 
   @Override
-  public void sendQuoteRequest() {
+  public void sendQuoteRequest(TDASessionConfig sessionConfig) {
     if (!isLoggedIn.getAcquire()) {
       log.error("Unable to send Quote Request. Not Logged In");
       throw new TDAWebSocketClientException("Unable to send Quote Request. Not Logged In");
     }
-    this.send(WebSocketRequestGenerator.generateQuoteRequest(this.credentials, this.sessionConfig));
+    this.send(WebSocketRequestGenerator.generateQuoteRequest(this.credentials, sessionConfig));
   }
 
   @Override
@@ -81,10 +80,10 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
     log.trace("Successfully logged in");
   }
 
-  public void register() throws InterruptedException {
+  public void register(TDASessionConfig sessionConfig) throws InterruptedException {
     log.trace("Attempting to connect WebSocket with URI: {}", this.getURI());
     this.connectBlocking();
     this.loginBlocking();
-    this.sendQuoteRequest();
+    this.sendQuoteRequest(sessionConfig);
   }
 }
