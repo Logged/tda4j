@@ -1,7 +1,7 @@
 package com.tda4j.http;
 
-import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.models.config.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
 import java.net.URI;
 import java.util.function.Consumer;
 import org.java_websocket.client.WebSocketClient;

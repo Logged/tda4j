@@ -12,6 +12,8 @@ src/main/resources/
 .idea/**/gradle.xml
 .idea/**/libraries
 build/
+/target
 # IntelliJ
 out/
 */application.properties
+*.iml

@@ -1,8 +1,8 @@
 package com.tda4j.generators;
 
 import com.google.gson.Gson;
-import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.models.config.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
 
 public class WebSocketRequestGenerator {
 
@@ -21,15 +21,15 @@ public class WebSocketRequestGenerator {
       TDASessionConfig sessionConfig) {
     QuoteParameters quoteParameters = new QuoteParameters(sessionConfig.tickers(),
         sessionConfig.fields());
-    return new QuoteRequest(sessionConfig.quoteService(), "SUBS", "1", credentials.userid(),
-        credentials.source(), quoteParameters);
+    return new QuoteRequest(sessionConfig.quoteService(), "SUBS", "1",
+        credentials.userid(), credentials.source(), quoteParameters);
   }
 
   private static LoginRequest getLoginRequest(TDACredentials credentials) {
     LoginParameters loginParameters = new LoginParameters(credentials.token(),
         getEncodedCredentials(credentials), "1.0", "0");
-    return new LoginRequest("ADMIN", "LOGIN", "0", credentials.userid(), credentials.source(),
-        loginParameters);
+    return new LoginRequest("ADMIN", "LOGIN", "0", credentials.userid(),
+        credentials.source(), loginParameters);
   }
 
   private static String getEncodedCredentials(TDACredentials tdaCredentials) {
@@ -51,24 +51,19 @@ public class WebSocketRequestGenerator {
   private record Credentials(String userid, String token, String company, String segment,
                              String cddomain, String usergroup, String accesslevel,
                              String authorized, String timestamp, String appid, String acl) {
-
   }
 
   private record LoginParameters(String token, String credential, String version, String qoslevel) {
-
   }
 
   private record LoginRequest(String service, String command, String requestid, String account,
                               String source, LoginParameters parameters) {
-
   }
 
   private record QuoteParameters(String keys, String fields) {
-
   }
 
   private record QuoteRequest(String service, String command, String requestid, String account,
                               String source, QuoteParameters parameters) {
-
   }
 }

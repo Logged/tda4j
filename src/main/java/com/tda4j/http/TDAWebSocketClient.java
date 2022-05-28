@@ -2,8 +2,8 @@ package com.tda4j.http;
 
 import com.tda4j.exceptions.TDAWebSocketClientException;
 import com.tda4j.generators.WebSocketRequestGenerator;
-import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.models.config.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.util.WebSocketUtil;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
@@ -26,8 +26,7 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
 
   @Override
   public void onOpen(ServerHandshake handshakedata) {
-    log.trace("Successfully Connected WebSocket to: {}. Data: {}", this.getURI(),
-        handshakedata);
+    log.trace("Successfully Connected WebSocket to: {}. Data: {}", this.getURI(), handshakedata);
   }
 
   @Override
@@ -44,8 +43,7 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
 
   @Override
   public void onClose(int code, String reason, boolean remote) {
-    log.trace("Disconnected with the following code, reason: {},{}",
-        code, reason);
+    log.trace("Disconnected with the following code, reason: {},{}", code, reason);
   }
 
   @Override
