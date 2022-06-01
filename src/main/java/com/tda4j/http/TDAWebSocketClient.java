@@ -2,8 +2,8 @@ package com.tda4j.http;
 
 import com.tda4j.exceptions.TDAWebSocketClientException;
 import com.tda4j.generators.WebSocketRequestGenerator;
-import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.models.config.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.util.WebSocketUtil;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
@@ -37,6 +37,7 @@ public class TDAWebSocketClient extends AbstractTDAWebSocketClient {
       if (WebSocketUtil.isLoggedIn(message)) {
         isLoggedIn.set(true);
         loginLatch.countDown();
+        return;
       }
     }
     consumer.accept(message);

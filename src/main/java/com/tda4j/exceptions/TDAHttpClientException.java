@@ -5,4 +5,8 @@ public class TDAHttpClientException extends RuntimeException {
   public TDAHttpClientException(String message, Throwable cause) {
     super(message, cause);
   }
+
+  public TDAHttpClientException(String message) {
+    super(message);
+  }
 }

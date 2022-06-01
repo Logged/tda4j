@@ -1,8 +1,8 @@
 package com.tda4j.generators;
 
 import com.google.gson.Gson;
-import com.tda4j.models.creds.TDACredentials;
 import com.tda4j.models.config.TDASessionConfig;
+import com.tda4j.models.creds.TDACredentials;
 
 public class WebSocketRequestGenerator {
 

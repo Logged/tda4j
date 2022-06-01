@@ -21,16 +21,22 @@ public class TDAHttpClient {
         .followRedirects(Redirect.NORMAL)
         .build();
 
-    HttpRequest request;
     try {
-      request = HttpRequest.newBuilder()
+      HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(HTTPConstants.USER_PRINCIPALS_URL))
           .GET()
           .header(HTTPConstants.USER_PRINCIPALS_AUTH_HEADER_KEY,
               HTTPConstants.USER_PRINCIPALS_BEARER_APPENDER + bearerToken)
           .timeout(Duration.ofSeconds(10))
           .build();
-      return client.send(request, BodyHandlers.ofString());
+      HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+      if (response.statusCode() != 200) {
+        throw new TDAHttpClientException(
+            String.format(
+                "Failed to get UserPrincipals. HTTP Status code: %s. Response: %s. Request: %s",
+                response.statusCode(), response, request));
+      }
+      return response;
     } catch (URISyntaxException | IOException | InterruptedException e) {
       throw new TDAHttpClientException("Failed to get UserPrincipals with following exception {}",
           e);
